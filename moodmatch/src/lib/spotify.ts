@@ -58,22 +58,27 @@ export const getToken = async (code: string) => {
         throw new Error("No code verifier found");
     }
 
-    const payload = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded',},
+    const response = await fetch(tokenUrl,
+    {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded",},
         body: new URLSearchParams({
             client_id: SPOTIFY_CLIENT_ID,
-            grant_type: 'authorization_code',
-            code,
+            grant_type: "authorization_code",
+            code: code,
             redirect_uri: SPOTIFY_REDIRECT_URI,
             code_verifier: codeVerifier,
         }),
+    });
+
+    const data = await response.json();
+    console.log("Spotify token response:", data);
+
+    if (!response.ok) {
+        throw new Error(`Spotify token error: ${data.error_description || data.error}`);
     }
 
-    const body = await fetch(tokenUrl, payload);
-    const response = await body.json();
+    localStorage.setItem("access_token",data.access_token);
 
-    localStorage.setItem("access_token",response.access_token);
-
-    return response;
+    return data;
 }

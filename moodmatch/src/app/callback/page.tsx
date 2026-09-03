@@ -1,12 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getToken } from "../../lib/spotify";
 
 export default function Callback() {
     const [message, setMessage] = useState("Connecting to Spotify...");
+    const hasRun = useRef(false);
 
     useEffect(() => {
+        if (hasRun.current) return;
+        hasRun.current = true;
+        
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
 
