@@ -4,7 +4,7 @@ export const SPOTIFY_CLIENT_ID =
 export const SPOTIFY_REDIRECT_URI =
     "http://127.0.0.1:3000/callback";
 
-const scope = 'user-read-private user-read-email';
+const scope = 'user-read-private user-read-email playlist-read-private';
 const authUrl = new URL("https://accounts.spotify.com/authorize")
 const tokenUrl = new URL("https://accounts.spotify.com/api/token");
 

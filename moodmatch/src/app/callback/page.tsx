@@ -21,6 +21,7 @@ export default function Callback() {
 
         getToken(code).then(() => {
             setMessage("Spotify connected successfully!");
+            window.location.href = "/";
         }).catch((error) => {
             console.error(error);
             setMessage(
@@ -31,8 +32,9 @@ export default function Callback() {
 
     return (
         <main>
-        <h1>MoodMatch</h1>
-        <p>{message}</p>
+            <h1>MoodMatch</h1>
+            <p>{message}</p>
+            <p>Welcome {}</p>
         </main>
     );
 }
